@@ -1,6 +1,6 @@
 FROM alpine:latest
 RUN true \
-  && sed -i -e 's/v[[:digit:]]\.[[:digit:]]/edge/g' /etc/apk/repositories \
+  && sed -i -e 's/v[[:digit:]]\+\.[[:digit:]]\+/edge/g' /etc/apk/repositories \
   && apk upgrade --update-cache --available \
   #
   # Add font, otherwise firefox draws garbage "tofu".
