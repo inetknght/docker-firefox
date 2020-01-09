@@ -1,11 +1,12 @@
 FROM alpine:latest
 RUN true \
-  && sed -i -e 's/v[[:digit:]]\+\.[[:digit:]]\+/edge/g' /etc/apk/repositories \
+  && sed -e 's/v[[:digit:]]\+\.[[:digit:]]\+/edge/g' /etc/apk/repositories \
+   | tee -a /etc/apk/repositories \
   && apk upgrade --update-cache --available \
   #
   # Add font, otherwise firefox draws garbage "tofu".
   # Noto is a Google-created open source font (Open Font License)
-  && apk add --no-cache font-noto \
+  && apk add --no-cache font-noto ghostscript-fonts \
   #
   # It seems only ESR is in alpine's package list.
   # I'll not custom-build Firefox at this time.
@@ -18,6 +19,8 @@ RUN true \
   # would be done here, but I leave that as an exercise
   # for you to figure out.
   && adduser -s $(which firefox) -D firefox \
+  && touch /etc/machine-id \
+  && chmod 666 /etc/machine-id \
   && true
 
 # Bind-mount /tmp/.X11-unix:/tmp/.X11-unix
@@ -41,7 +44,7 @@ ENV DISPLAY=:0
 ENV HOME=/home/firefox
 CMD true \
   && head -c 16 /dev/urandom \
-    | xxd -g 16 -c 16 \
-    | cut -d ' ' -f 2 > /etc/machine-id \
-&& su firefox -- --no-remote
+   | xxd -g 16 -c 16 \
+   | cut -d ' ' -f 2 > /etc/machine-id \
+  && su firefox -- --no-remote
 
