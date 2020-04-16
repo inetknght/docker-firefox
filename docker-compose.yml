@@ -1,0 +1,33 @@
+
+version: '3'
+
+volumes:
+  firefox:
+
+networks:
+  firefox:
+
+services:
+  firefox.inetknght:
+    image: inetknght:firefox-${FIREFOX_VERSION}
+    build:
+      context: src
+      args:
+        FIREFOX_VERSION: "3.7.3"
+    # environment:
+      # - "XAUTHORITY=/dev/shm/xauth"
+    volumes:
+      - "firefox:/home/firefox"
+      #
+      # Remember to `xhost +local:` or else you may see
+      # ~ $ firefox
+      # No protocol specified
+      # Unable to init server: Could not connect: Connection refused
+      # Error: cannot open display: :0
+      - "/tmp/.X11-unix:/tmp/.X11-unix"
+      # - "${XAUTHORITY}:/dev/shm/xauth:ro"
+    networks:
+      - firefox
+    deploy:
+      restart_policy:
+        condition: always
