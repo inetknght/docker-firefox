@@ -47,11 +47,15 @@ RUN true \
     && echo 'pref("device.sensors.test.events", false);' \
     && echo 'pref("device.storage.enabled", false);' \
     && echo 'pref("dom.battery.enabled", false);' \
+    && echo 'pref("dom.disable_beforeunload", true);' \
     && echo 'pref("dom.disable_window_move_resize", true);' \
     && echo 'pref("dom.disable_window_open_feature.close", true);' \
+    && echo 'pref("dom.disable_window_open_feature.location", true);' \
     && echo 'pref("dom.disable_window_open_feature.menubar", true);' \
     && echo 'pref("dom.disable_window_open_feature.minimizable", true);' \
     && echo 'pref("dom.disable_window_open_feature.personalbar", true);' \
+    && echo 'pref("dom.disable_window_open_feature.resizable", true);' \
+    && echo 'pref("dom.disable_window_open_feature.status", true);' \
     && echo 'pref("dom.disable_window_open_feature.titlebar", true);' \
     && echo 'pref("dom.disable_window_open_feature.toolbar", true);' \
     && echo 'pref("dom.event.clipboardevents.enabled", false);' \
